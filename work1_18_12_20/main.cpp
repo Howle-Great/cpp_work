@@ -34,6 +34,24 @@ public:
         
     }
     
+    Matrix(Matrix &input) {
+        arr = new float*[height];
+        for (auto i = 0; i < width; i++) {
+            arr[i] = new float[width];
+        }
+        
+        for (auto i = 0; i < height*width; i++) {
+            arr[i/height][i%width] = 0;
+        }
+        
+        for (int i = 0; i < input.height; i++) {
+            for (int j = 0; j < input.width; j++) {
+                arr[i][j] = input[i*input.height + j ];
+            }
+        }
+        
+    }
+    
     
     ~Matrix() {
         // тут пока утечка памяти
@@ -76,22 +94,7 @@ public:
         }
 
     }
-    
-    void minus(float num) {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                arr[i][j] -= num;
-            }
-        }
-    }
-    
-    void multiply(float num) {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                arr[i][j] *= num;
-            }
-        }
-    }
+
     
     float& operator[] (const int index) const
     {
@@ -137,6 +140,22 @@ public:
 private:
     float** arr;
     
+    void minus(float num) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                arr[i][j] -= num;
+            }
+        }
+    }
+    
+    void multiply(float num) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                arr[i][j] *= num;
+            }
+        }
+    }
+    
 };
 
 
@@ -152,10 +171,12 @@ int main(int argc, const char * argv[]) {
     Matrix tmp_for_minus_operation;
     tmp_for_minus_operation = tmp - 20;
     tmp_for_minus_operation.print();
+    tmp.print();
 
     Matrix tmp_for_multiply_operation;
     tmp_for_multiply_operation = tmp * 2;
     tmp_for_multiply_operation.print();
+    tmp.print();
     
     return 0;
 }

@@ -54,13 +54,10 @@ public:
     
     
     ~Matrix() {
-        // тут пока утечка памяти
-        
-        
-//        for (auto i = 0; i < height; i++) {
-//            delete arr[i];
-//        }
-//        delete []arr;
+        for (auto i = 0; i < height; i++) {
+            delete arr[i];
+        }
+        delete []arr;
     }
     
     void input(vector<float> input) {
